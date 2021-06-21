@@ -4,19 +4,10 @@
      <el-image class="head_img" :src="url" :alt="alt"></el-image>
     </div>
   <el-menu :default-active="activeIndex" class="menu" mode="horizontal">
-    <el-menu-item index='1'><router-link :to='index/information'>首页</router-link></el-menu-item>
-    <router-view></router-view>
-    <el-menu-item index='2'><router-link :to="index/introduction">中心简介</router-link></el-menu-item>
-    <el-menu-item index='3'><router-link :to="index/dynamic">中心动态</router-link></el-menu-item>
-    <el-menu-item index='4'><router-link :to="index/team">专家团队</router-link></el-menu-item>
-    <el-menu-item index='5'><router-link :to="index/forum">县域论坛</router-link></el-menu-item>
-    <el-menu-item index='6'><router-link :to="index/reform">县政改革</router-link></el-menu-item>
-    <el-menu-item index='7'><router-link :to="index/economy">县域经济</router-link></el-menu-item>
-    <el-menu-item index='8'><router-link :to="index/special">特色县市</router-link></el-menu-item>
-    <el-menu-item index='9'><router-link :to="index/agriculture">三农问题</router-link></el-menu-item>
-    <el-menu-item index='10'><router-link :to="index/data">统计数据</router-link></el-menu-item>
-    <el-menu-item index='11'><router-link :to="index/information">政策资讯</router-link></el-menu-item>
-    <el-menu-item index='12'><router-link :to="index/book">县域书目</router-link></el-menu-item>
+    <el-menu-item key='0'><router-link :to="{path:'/'}">首页</router-link></el-menu-item>
+    <el-menu-item key='000'><router-link :to="{path:'/content'}">内容详情页</router-link></el-menu-item>
+
+    <el-menu-item v-for="(operate,path,index) in navTo.operate" :key="index"><router-link :to="{path:'/detail'}">{{operate.name}}</router-link></el-menu-item>
     <router-view/>
 </el-menu>
   </div>
@@ -27,9 +18,31 @@ export default {
   name: 'myHeader',
   data () {
     return {
+      navTo: {
+        'operate': [
+          {'name': '中心简介', 'id': 1},
+          {'name': '中心动态', 'id': 2},
+          {'name': '专家团队', 'id': 3},
+          {'name': '县域论坛', 'id': 4},
+          {'name': '县政改革', 'id': 5},
+          {'name': '县域经济', 'id': 6},
+          {'name': '特色县市', 'id': 7},
+          {'name': '三农问题', 'id': 8},
+          {'name': '统计数据', 'id': 9},
+          {'name': '政策资讯', 'id': 10},
+          {'name': '县域书目', 'id': 11}
+        ]
+      },
       activeIndex: '4',
       alt: '此处显示logo图',
       url: 'http://chinaminzheng.ccnu.edu.cn/images/20/12/15/2hjy4f0g0e/8.jpg'
+    }
+  },
+  methods: {
+    change (index) {
+      console.log(this)
+      console.log(index)
+      this.current = index
     }
   }
 }
