@@ -5,44 +5,69 @@
     </div>
   <el-menu :default-active="activeIndex" class="menu" mode="horizontal">
     <el-menu-item key='0'><router-link :to="{path:'/'}">首页</router-link></el-menu-item>
-    <el-menu-item key='000'><router-link :to="{path:'/content'}">内容详情页</router-link></el-menu-item>
+    <el-menu-item v-for="(operate) in operate" :key="operate.id" @click="routerpath(operate.style_id,operate.id,operate.name)">{{operate.name}}</el-menu-item>
 
-    <el-menu-item v-for="(operate,path,index) in navTo.operate" :key="index"><router-link :to="{path:'/detail'}">{{operate.name}}</router-link></el-menu-item>
-    <router-view/>
 </el-menu>
+<router-view :key="channelCode"></router-view>
   </div>
 </template>
 
 <script>
+import { get } from '../utils/request'
+
 export default {
   name: 'myHeader',
   data () {
     return {
-      navTo: {
-        'operate': [
-          {'name': '中心简介', 'id': 1},
-          {'name': '中心动态', 'id': 2},
-          {'name': '专家团队', 'id': 3},
-          {'name': '县域论坛', 'id': 4},
-          {'name': '县政改革', 'id': 5},
-          {'name': '县域经济', 'id': 6},
-          {'name': '特色县市', 'id': 7},
-          {'name': '三农问题', 'id': 8},
-          {'name': '统计数据', 'id': 9},
-          {'name': '政策资讯', 'id': 10},
-          {'name': '县域书目', 'id': 11}
-        ]
-      },
+      navTo: {},
       activeIndex: '4',
       alt: '此处显示logo图',
-      url: 'http://chinaminzheng.ccnu.edu.cn/images/20/12/15/2hjy4f0g0e/8.jpg'
+      url: 'http://chinaminzheng.ccnu.edu.cn/images/20/12/15/2hjy4f0g0e/8.jpg',
+      operate: [],
+      channelCode: ''
     }
   },
+  created () {
+    this.getNav()
+  },
+  watch: {
+    '$route':
+    function (to, from) {
+      if (to.query.id !== from.query.id) {
+        window.location.reload()
+      }
+    },
+    deep: true
+  },
   methods: {
+    async getNav () {
+      const {data} = await get('http://cc.xiaochengyun.net/api/column/getList')
+      this.operate = data.results
+    },
     change (index) {
       console.log(this)
       console.log(index)
       this.current = index
+    },
+    routerpath (style, columnId, columnName) {
+      if (style === 1) {
+        this.$router.push({
+          path: '/content',
+          query: {
+            id: `${columnId}`
+          }
+        })
+      } else {
+        this.$router.push({
+          path: '/detail',
+          query: {
+            id: `${columnId}`,
+            columnName: `${columnName}`
+
+          }
+        })
+      }
+      // this.$emit('backcontent',columnId)
     }
   }
 }
@@ -52,11 +77,17 @@ export default {
   height: 150px;
   background-color:  #475669;
 }
+
 .menu{
+  width:100%;
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content:space-around;
 }
 .el-menu-item{
-  font-size: 23px;
-  margin: 0 8px;
+  font-size: 24px;
+  text-decoration: none!important;
+
 }
 </style>

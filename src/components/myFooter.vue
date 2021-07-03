@@ -14,7 +14,7 @@ export default {
 <style scoped>
 .footer {
     background-color: gray;
-    color: #333;
+    color: url('../assets/images/background.png');
     text-align: center;
     line-height: 200px;
     margin-top:30px;
