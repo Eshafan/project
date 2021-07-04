@@ -14,44 +14,40 @@
 <script>
 export default {
   name: 'conveyorBelt',
-  props:{
-      data:{
-      type:Object,
+  props: {
+    data: {
+      type: Object,
       default: () => ({
-        article_list:{
-          addtime:'',
-          author:'',
-          cover_img_url:'http://chinaminzheng.ccnu.edu.cn/images/20/12/15/2hjy4f0g0e/8.jpg',
+        article_list: {
+          addtime: '',
+          author: '',
+          cover_img_url: 'http://chinaminzheng.ccnu.edu.cn/images/20/12/15/2hjy4f0g0e/8.jpg',
+          // eslint-disable-next-line no-undef
           id,
-          title:'',
+          title: ''
         },
-        column_name:'',
+        column_name: ''
       })
-      }
+    }
   },
   data () {
     return {
-			   list: [], // 使用数据
-			   oldList: [], // 原始数据
-			   boxWidth: 200, // 单个div宽度
-         boxWHeight: 400, // 单个div高度
-			   moveContainerWidth: 0, // 移动容器宽度
-			   moveContainerMarginLeft: 0, // 移动容器宽度margin-left
-			   timer: null, // 计时器
-			   step: 5, // 移动步长
-			   stepTotal: 0, // 步长计数
-			   interval: 200, // 间隔时间
-			   fillIndex: 0 // 填充下标
+      list: [], // 使用数据
+      oldList: [], // 原始数据
+      boxWidth: 200, // 单个div宽度
+      boxWHeight: 400, // 单个div高度
+      moveContainerWidth: 0, // 移动容器宽度
+      moveContainerMarginLeft: 0, // 移动容器宽度margin-left
+      timer: null, // 计时器
+      step: 5, // 移动步长
+      stepTotal: 0, // 步长计数
+      interval: 200, // 间隔时间
+      fillIndex: 0 // 填充下标
     }
   },
-  created(){
 
-  },
   mounted () {
-        // const {data} = this;
-        // this.list=data.article_list;
-        // console.log(this.list)
-		   this.getData()
+    this.getData()
   },
   watch: {
 
@@ -60,8 +56,8 @@ export default {
     getData () {
       this.oldList = this.data.article_list
       this.handle(this.data.article_list)
-		   },
-		handle (result) {
+    },
+    handle (result) {
       // 获取容器宽度
       let containerWidth = this.$refs.container.offsetWidth
       // 获取返回数据总宽度
@@ -81,19 +77,19 @@ export default {
         console.log(111, this.moveContainerWidth)
       }
       // 填充数据
-      let new_list = result
+      let newList = result
       if (fillBoxNum) {
         for (let i = 0; i < fillBoxNum; i++) {
-          new_list = new_list.concat(result)
+          newList = newList.concat(result)
         }
       }
-      console.log(111, new_list)
+      console.log(111, newList)
       // 重新赋值
-      this.list = new_list
+      this.list = newList
       // 启动
-      // this.start()
-		   },
-		   start () {
+      this.start()
+      },
+      start () {
       this.timer = setInterval(() => {
         if (this.stepTotal >= this.boxWidth) {
           this.stepTotal = 0

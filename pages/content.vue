@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import myFooter from '../src/components/myFooter'
+// import myFooter from '../src/components/myFooter'
 import MyFooter from '../src/components/myFooter.vue'
 import MyHeader from '../src/components/myHeader'
 import { get } from '../src/utils/request'
@@ -47,7 +47,6 @@ export default {
       if (id) {
       // this.name=this.$route.query.columnName
         const {data} = await get('http://cc.xiaochengyun.net/api/article/getList', {column_id: id})
-        console.log(111111, data)
         this.contentData = data.results
     }else{
         console.log('不是从栏目进来的')

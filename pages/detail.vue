@@ -62,7 +62,7 @@ export default {
       name: '',
       pageList: [],
       page_num: 1, // 当前在第几页
-      page_size: 4, // 一页显示几条
+      page_size: 10, // 一页显示几条
       total: 10,
       keyWord: ''
       // id,
@@ -81,7 +81,6 @@ export default {
         page_num: this.page_num,
         page_size: this.page_size,
         column_id: id})
-      console.log(11111, data)
       // return
       this.pageList = data.results.data
       this.total = data.results.count

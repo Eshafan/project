@@ -1,24 +1,25 @@
 <template>
 <!-- 首页的内容展示页面：左轮播图，右折叠框 -->
   <div>
-  <el-row class="grid-content bg-purple-dark" >
   <div class="introduction_title">{{data.column_name}}</div>
+
+  <el-row class="grid-content bg-purple-dark" >
   <!-- <div class="introduction_title">data.name</div> -->
   <el-col :span="12" class="introduction_img" >
     <el-carousel indicator-position="outside" height="365px" @change="bind">
-    <el-carousel-item v-for="item in data.article_list" :key="item.id" @click="articleDetail()">
-        <el-image :src="item.cover_img_url"></el-image>
+    <el-carousel-item v-for="item in data.article_list" :key="item.id">
+        <el-image :src="item.cover_img_url"  @click="articleDetail(item.id)"></el-image>
     </el-carousel-item>
     </el-carousel>
   </el-col>
   <el-col :span="12"  class="introduction_text">
   <el-collapse v-for="(item,index) in data.article_list" :key="item.id" v-model="activeName" accordion class="introduction_collapse">
     <el-collapse-item :title="item.title" :name="index.toString()">
-      <div @click="articleDetail()" class="summary">{{item.summary}}</div>
+      <div @click="articleDetail(item.id)" class="summary">{{item.summary}}</div>
     </el-collapse-item>
   </el-collapse>
     </el-col>
-    <div class="more" @click="more(data.article_list.id)">查看更多>>></div>
+    <div class="more" @click="more(data.column_id,data.column_name)">查看更多>>></div>
   </el-row>
   </div>
 </template>
@@ -51,15 +52,13 @@ export default {
     bind (val) {
       this.activeName = val.toString()
     },
-    more (id) {
+    more (id, columnName) {
       this.$router.push({
-        path: 'detail',
-        query: {
-          id: id
-        }})
+        path: `/detail?id=${id}&columnName=${columnName}`
+      })
     },
-    articleDetail () {
-      this.$router.push('/detail')
+    articleDetail (id) {
+      this.$router.push(`/content?articleid=${id}`)
     }
   }
 }
@@ -68,17 +67,20 @@ export default {
 <style scoped>
 .grid-content {
     border-radius: 20px;
-    min-height: 600px;
-    margin:80px;
+    min-height: 500px;
+    margin:0 80px 80px 80px;
   }
 .bg-purple-dark {
     background: url('../assets/images/background.png')
   }
 .introduction_title{
+  margin-top: 80px;
   font-size: 40px;
   font-weight: bold;
   text-align: center;
-  color: #043285;
+  color: white;
+  padding:10px;
+  background: rgba(16, 52, 128, 0.9);
 
 }
 .introduction_img{
