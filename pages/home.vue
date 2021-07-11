@@ -49,33 +49,33 @@ export default {
       activeName1: '1',
       activeName2: '2',
       bannerPicture: [],
-      list:[],
-      picture:[],
-      belt:[],
+      list: [],
+      picture: [],
+      belt: []
     }
   },
   created () {
-      this.getbanner()
-      // this.getNav()
-      this.getModule()
+    this.getbanner()
+    // this.getNav()
+    this.getModule()
   },
   methods: {
     async getbanner () {
-        const {data} = await get('http://cc.xiaochengyun.net/api/banner/getList')
-        if(data){
-        return this.bannerPicture=data.results
-        }
+      const {data} = await get('http://cc.xiaochengyun.net/api/banner/getList')
+      if (data) {
+        this.bannerPicture = data.results
+      }
     },
-    skip(url){
-        if(url){
-          return window.location.href = url
-        }
+    skip (url) {
+      if (url) {
+        window.location.href = url
+      }
     },
     async getModule () {
       const { data } = await get('http://cc.xiaochengyun.net/api/module/getList',{page:'index'})
       const result = data.results
-      for(let i = 0;i<result.length;i++){
-          if(result[i].style_id===1){
+      for (let i = 0; i < result.length ;i++) {
+           if (result[i].style_id ===1) {
             this.list.push(result[i])
           }else if (result[i].style_id===2){
             this.picture.push(result[i])
